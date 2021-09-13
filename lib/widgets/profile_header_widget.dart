@@ -17,7 +17,8 @@ class ProfileHeaderWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                BackButton(color: Colors.white),
+                BackButton(color: Colors.white,
+                ),
                 Expanded(
                   child: Text(
                     name,

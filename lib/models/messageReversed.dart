@@ -6,24 +6,24 @@ class MessageField {
   static final String createdAt = 'createdAt';
 }
 
-class Message {
-  final String idUser;
-  final String targetUser;
-  final String urlAvatar;
-  final String username;
-  final String message;
-  final DateTime createdAt;
+class MessageReversed {
+  String idUser;
+  String targetUser;
+  String urlAvatar;
+  String username;
+  String message;
+  DateTime createdAt;
 
-  const Message({
+  MessageReversed({
     @required this.idUser,
     @required this.targetUser,
     @required this.urlAvatar,
     @required this.username,
     @required this.message,
-    @required this.createdAt,
+    this.createdAt
   });
 
-  static Message fromJson(Map<String, dynamic> json) => Message(
+  static MessageReversed fromJson(Map<String, dynamic> json) => MessageReversed(
         idUser: json['idUser'],
         targetUser: json['targetUser'],
         urlAvatar: json['urlAvatar'],

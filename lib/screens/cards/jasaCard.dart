@@ -53,6 +53,7 @@ class JasaCards extends StatelessWidget {
                                           jasaPictures: jasaPictures,
                                           price: jasaList[index].price,
                                           shoeName: jasaList[index].name,
+                                          jasaUserId: jasaList[index].jasaUserId,
                                           rating: shoeListModel.rating,
                                           // showpersentage: shoeListModel.showpersentage,
                                           // activeheart: shoeListModel.activeheart,

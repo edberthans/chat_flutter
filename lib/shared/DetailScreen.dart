@@ -1,8 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:chat_flutter/models/chatUser.dart';
 import 'package:chat_flutter/models/jasaList.dart';
+import 'package:chat_flutter/models/message.dart';
+import 'package:chat_flutter/models/user.dart';
+import 'package:chat_flutter/screens/chats/chat_page.dart';
+import 'package:chat_flutter/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:chat_flutter/Component/defaultElements.dart';
+import 'package:provider/provider.dart';
 
 class DetailScreen extends StatefulWidget {
   // final String shoeimage;
@@ -11,6 +17,7 @@ class DetailScreen extends StatefulWidget {
   final String shoeName;
   final String price;
   final String rating;
+  final String jasaUserId;
   // final bool showpersentage;
   // final bool activeheart;
   final Color showcasebgcolor;
@@ -24,6 +31,7 @@ class DetailScreen extends StatefulWidget {
       this.shoeName,
       this.price,
       this.rating,
+      this.jasaUserId,
       // this.showpersentage,
       // this.activeheart,
       this.showcasebgcolor,
@@ -46,120 +54,134 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Column(
+    final user = Provider.of<User>(context);
+    
+    return StreamBuilder<UserData>(
+      stream: DatabaseService(uid: user.uid).userData,
+      builder: (context, snapshot) {
+        Message chatuser = new Message(
+          idUser: user.uid,
+          targetUser: widget.jasaUserId,
+          username: widget.shoeName,
+          urlAvatar: widget.jasaPictures[0],
+          createdAt: null,
+        );
+        return Scaffold(
+          body: Stack(
             children: [
-              buildAppBar(),
-              // widget.showpersentage
-              //     ? Container(
-              //         height: 30,
-              //         width: 50,
-              //         decoration: BoxDecoration(
-              //           color: DefaultElements.ksecondrycolor,
-              //           borderRadius: BorderRadius.circular(10),
-              //         ),
-              //         child: Center(
-              //           child: Text(
-              //             "${widget.persentage}",
-              //             style: TextStyle(
-              //                 fontWeight: FontWeight.bold, fontSize: 16),
-              //           ),
-              //         ),
-              //       )
-              //     : Container(),
-              SizedBox(
-                height: 5,
-              ),
-              buildShoeShowcase(context),
-              SizedBox(
-                height: 5,
-              ),
-              Expanded(
-                child: Container(),
-              ),
-              buildPriceSectionArea(context),
-            ],
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 90,
-              decoration: BoxDecoration(
-                  color: Colors.lightBlueAccent,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
+              Column(
+                children: [
+                  buildAppBar(chatuser),
+                  // widget.showpersentage
+                  //     ? Container(
+                  //         height: 30,
+                  //         width: 50,
+                  //         decoration: BoxDecoration(
+                  //           color: DefaultElements.ksecondrycolor,
+                  //           borderRadius: BorderRadius.circular(10),
+                  //         ),
+                  //         child: Center(
+                  //           child: Text(
+                  //             "${widget.persentage}",
+                  //             style: TextStyle(
+                  //                 fontWeight: FontWeight.bold, fontSize: 16),
+                  //           ),
+                  //         ),
+                  //       )
+                  //     : Container(),
+                  SizedBox(
+                    height: 5,
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: DefaultElements.knavbariconcolor,
-                      blurRadius: 2,
-                      offset: Offset(0, -1),
-                    ),
-                  ]),
-              child: Padding(
-                padding: EdgeInsets.only(left: 30),
-                child: Row(
-                  children: [
-                    Text(
-                      "${widget.price}",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w900,
+                  buildShoeShowcase(context),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Expanded(
+                    child: Container(),
+                  ),
+                  buildPriceSectionArea(context),
+                ],
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 90,
+                  decoration: BoxDecoration(
+                      color: Colors.lightBlueAccent,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
                       ),
-                    ),
-                    Expanded(
-                      child: Container(),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 20),
-                      child: FlatButton(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: DefaultElements.knavbariconcolor,
+                          blurRadius: 2,
+                          offset: Offset(0, -1),
                         ),
-                        color: Color(0xffF7F7F7),
-                        onPressed: () {},
-                        child: Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                "assets/icons/heart.svg",
-                                height: 20,
-                                color: DefaultElements.kprimarycolor,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "Book a date",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
-                                    color: DefaultElements.kprimarycolor),
-                              )
-                            ],
+                      ]),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 30),
+                    child: Row(
+                      children: [
+                        Text(
+                          "${widget.price}",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w900,
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                        Expanded(
+                          child: Container(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: FlatButton(
+                            padding:
+                                EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            color: Color(0xffF7F7F7),
+                            onPressed: () {},
+                            child: Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/icons/heart.svg",
+                                    height: 20,
+                                    color: DefaultElements.kprimarycolor,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "Book a date",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16,
+                                        color: DefaultElements.kprimarycolor),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          )
-        ],
-      ),
+              )
+            ],
+          ),
+        );
+      }
     );
   }
 
-  buildAppBar() {
+  buildAppBar(Message chatuser) {
     return Container(
       color: Colors.yellow,
       child: Padding(
@@ -178,47 +200,60 @@ class _DetailScreenState extends State<DetailScreen> {
             Expanded(
               child: Container(),
             ),
-            RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                    text: "KEN",
+            Padding(
+              padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
+              child: RichText(
+                text: TextSpan(children: [
+                  TextSpan(
+                      text: "KEN",
+                      style: TextStyle(
+                        color: DefaultElements.kprimarycolor,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  TextSpan(
+                    text: "CAN",
                     style: TextStyle(
-                      color: DefaultElements.kprimarycolor,
+                      color: DefaultElements.ksecondrycolor,
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
-                    )),
-                TextSpan(
-                  text: "CAN",
-                  style: TextStyle(
-                    color: DefaultElements.ksecondrycolor,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-              ]),
+                ]),
+              ),
             ),
             Expanded(
               child: Container(),
             ),
-            Container(
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                  color: DefaultElements.kdefaultredcolor,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: DefaultElements.knavbariconcolor,
-                      blurRadius: 10,
-                      offset: Offset(0, -1),
-                    )
-                  ]),
-              child: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: SvgPicture.asset(
-                  "assets/icons/chat.svg",
-                  height: 25,
-                  color: Colors.white,
+            FlatButton(
+              minWidth:5,
+              padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ChatPage(user: chatuser)),
+                );
+              },
+              child: Container(
+                height: 30,
+                width: 30,
+                decoration: BoxDecoration(
+                    color: DefaultElements.kdefaultredcolor,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: DefaultElements.knavbariconcolor,
+                        blurRadius: 10,
+                        offset: Offset(0, -1),
+                      )
+                    ]),
+                child: Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: SvgPicture.asset(
+                    "assets/icons/chat.svg",
+                    height: 25,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

@@ -1,24 +1,25 @@
 import 'package:chat_flutter/models/chatUser.dart';
 import 'package:chat_flutter/models/message.dart';
+import 'package:chat_flutter/models/messageReversed.dart';
 import 'package:chat_flutter/models/user.dart';
 import 'package:chat_flutter/widgets/messages_widget.dart';
 import 'package:chat_flutter/widgets/new_message_widget.dart';
 import 'package:chat_flutter/widgets/profile_header_widget.dart';
 import 'package:flutter/material.dart';
 
-class ChatPage extends StatefulWidget {
-  final Message user;
+class ChatPageReversed extends StatefulWidget {
+  final MessageReversed user;
 
-  const ChatPage({
+  const ChatPageReversed({
     @required this.user,
     Key key,
   }) : super(key: key);
 
   @override
-  _ChatPageState createState() => _ChatPageState();
+  _ChatPageReversedState createState() => _ChatPageReversedState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _ChatPageReversedState extends State<ChatPageReversed> {
   @override
   Widget build(BuildContext context) => Scaffold(
         extendBodyBehindAppBar: true,

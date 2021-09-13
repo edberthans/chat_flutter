@@ -1,6 +1,7 @@
 class JasaUserData {
   final String uid;
   final String name;
+  final String jasaUserId;
   final String gender;
   String price;
   List<String> pictures;
@@ -15,6 +16,7 @@ class JasaUserData {
   JasaUserData({
     this.uid,
     this.name,
+    this.jasaUserId,
     this.gender,
     this.price,
     this.pictures,
