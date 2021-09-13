@@ -1,16 +1,12 @@
-# chat_flutter
+# KENCAN
 
-A new Flutter project.
+Kencan is a rent a date application. Kencan in Indonesia means Date which represents the name of the application well.
 
-## Getting Started
+## Developed Features
 
-This project is a starting point for a Flutter application.
+![login](https://user-images.githubusercontent.com/73214363/133067298-28952394-6e64-4e9f-9e44-96a9d374735d.png)
+![homepage](https://user-images.githubusercontent.com/73214363/133067318-10743021-4be9-4e43-b064-85817801006a.png)
+![profile](https://user-images.githubusercontent.com/73214363/133067340-bf8897b2-1b29-43f5-814c-d2aac0212256.png)
+![chatlist](https://user-images.githubusercontent.com/73214363/133067360-66c5bb55-2504-4cb3-979c-e4a8d17adf45.png)
+![chat](https://user-images.githubusercontent.com/73214363/133067375-2bbb869e-9d17-4117-97f3-4297da454c8d.png)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
